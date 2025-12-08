@@ -1,3 +1,3 @@
-# dashwing_dashboard
+# Dashwing Dashboard
 
 Dashboard for dashwing
