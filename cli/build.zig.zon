@@ -1,0 +1,7 @@
+.{
+    .name = .dashwing_cli,
+    .version = "0.0.1",
+    .minimum_zig_version = "0.15.2",
+    .paths = .{""},
+    .fingerprint = 0xbe9006d5b3832b1e,
+}
