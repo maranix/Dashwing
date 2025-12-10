@@ -31,9 +31,8 @@ pub const ParserResult = struct {
 };
 
 // TODO: Complete this implementation
-pub fn parse(alloc: Allocator, root_cmd: *const Command, args: []*const []const u8) ParserError!ParserResult {
-    _ = root_cmd;
-    return .{ .alloc = alloc, .rawArgs = args };
+pub fn parse(alloc: Allocator, root_cmd: *const Command, args: [][]const u8) ParserError!ParserResult {
+    return .{ .alloc = alloc, .cmd = root_cmd, .rawArgs = args, .flags = &.{} };
 }
 
 pub fn parseWithIterator(alloc: Allocator, root_cmd: *const Command, iter: *ArgIterator) ParserError!ParserResult {

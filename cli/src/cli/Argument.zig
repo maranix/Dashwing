@@ -57,3 +57,33 @@ pub fn isFlag(arg: []const u8) bool {
 pub fn isCommand(arg: []const u8) bool {
     return !mem.startsWith(u8, arg, "-");
 }
+
+test "isCommand properly recognizes arg as Command" {
+    try testing.expect(!isCommand("--test"));
+    try testing.expect(isCommand("test"));
+    try testing.expect(!isCommand("-test"));
+}
+
+test "isFlag properly recognizes arg as Flag" {
+    try testing.expect(!isFlag("test"));
+    try testing.expect(isFlag("--test"));
+    try testing.expect(isFlag("-test"));
+}
+
+test "GenericOption properly matches with arg" {
+    const option = Flag.initWithDefaultValue(.{ .long = "test", .short = "t" }, false);
+
+    // This case should fail at compile time (short isn't really short)
+    // const option = Flag.initWithDefaultValue(.{ .long = "test", .short = "test" }, false);
+
+    try testing.expect(option.match("--test"));
+    try testing.expect(option.match("-t"));
+
+    // These cases are currently failing, which means the [match] logic needs to be updated.
+    //
+    // Refer to [isFlag] because that one is more correct, match only matches the key.
+    //
+    //
+    // try testing.expect(!option.match("-test"));
+    // try testing.expect(!option.match("--t"));
+}
