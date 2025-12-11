@@ -15,7 +15,7 @@ const ArgIterator = std.process.ArgIterator;
 const Allocator = mem.Allocator;
 const Flag = Argument.Flag;
 
-pub const ParserError = error{ CommandNotFound, FlagNotFound } || Allocator.Error;
+pub const ParserError = error{ CommandNotFound, FlagNotFound } || Argument.OptionError || Allocator.Error;
 
 pub const ParserResult = struct {
     const Self = @This();
@@ -74,7 +74,7 @@ pub fn parseWithIterator(alloc: Allocator, root_cmd: *const Command, iter: *ArgI
             try flagCollection.appendSlice(alloc, cmd.flags);
 
             for (flagCollection.items) |*flag| {
-                if (flag.match(arg)) {
+                if (try flag.match(arg)) {
                     flag.value = true;
                     continue :argLoop;
                 }

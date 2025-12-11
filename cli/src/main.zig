@@ -8,14 +8,14 @@ pub fn main() !void {
     const alloc = arena.allocator();
 
     const root_cmd = cli.Command{ .name = "Dashwing", .version = "0.0.1", .description = "Dashwing CLI", .flags = &.{
-        cli.Argument.Flag.init(.{ .long = "test", .short = "t" }),
+        try cli.Argument.Flag.init(.{ .long = "test", .short = "t" }),
     }, .sub_commands = &.{
         cli.Command{
             .name = "source",
             .version = "0.0.1",
             .description = "use this source",
             .flags = &.{
-                cli.Argument.Flag.init(.{ .long = "test", .short = "t" }),
+                try cli.Argument.Flag.init(.{ .long = "test", .short = "t" }),
             },
             .sub_commands = &.{
                 cli.Command{
@@ -45,7 +45,7 @@ pub fn main() !void {
             .version = "0.1.0",
             .description = "use this test",
             .flags = &.{
-                cli.Argument.Flag.init(.{ .long = "source", .short = "s" }),
+                try cli.Argument.Flag.init(.{ .long = "source", .short = "s" }),
             },
             .sub_commands = &.{
                 cli.Command{
