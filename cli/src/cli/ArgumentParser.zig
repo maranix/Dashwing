@@ -15,6 +15,8 @@ const ArgIterator = std.process.ArgIterator;
 const Allocator = mem.Allocator;
 const Flag = Argument.Flag;
 
+const OPTION_TERMINATION_DELIMITER = "--";
+
 pub const ParserError = error{ CommandNotFound, FlagNotFound } || Argument.OptionError || Allocator.Error;
 
 pub const ParserResult = struct {
@@ -51,7 +53,7 @@ pub fn parseWithIterator(alloc: Allocator, root_cmd: *const Command, iter: *ArgI
     argLoop: while (iter.next()) |arg| {
         try argCollection.append(alloc, arg);
 
-        if (mem.eql(u8, arg, "--")) {
+        if (mem.eql(u8, arg, OPTION_TERMINATION_DELIMITER)) {
             terminateOptionParsing = true;
             continue;
         }
